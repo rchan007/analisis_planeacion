@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block container %}
+    <h1 class="col-12">Fabric Shortage</h1>
+    <a href="{% url 'fabric_shortage_new' %}" class="btn btn-primary">New</a>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <th>Workcenter</th>
+            <th>Sku</th>
+            <th>Fabric</th>
+            <th>Pieces Issue</th>
+            <th>Pieces Short</th>
+            <th>Comments</th>
+            <th>Options</th>
+        </thead>
+        <tbody>
+            {% for fabric in fabric_shortage%}
+                <tr>
+                    <td>{{fabric.workcenter}}</td>
+                    <td>{{fabric.sku}}</td>
+                    <td>{{fabric.no_fabric}}</td>
+                    <td>{{fabric.pcs_to_issue}}</td>
+                    <td>{{fabric.pcs_short}}</td>
+                    <td>{{fabric.comments}}</td>
+                    <td>
+                        <a href="{% url 'fabric_shortage_update' fabric.id %}" class="btn btn-primary">Edit</a>
+                        <a href="{% url 'fabric_shortage_delete' fabric.id %}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+{% endblock %}

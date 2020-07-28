@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block container %}
+    <div class="d-flex flex-column mx-auto">
+        <div class="table-responsive bg-white p-3 rounded shadow mb-3">
+            <table id="excel-table" class="table table-hover table-sm">
+                <thead>
+                    <th>Year</th>
+                    <th>Month</th>
+                    <th>Week</th>
+                    <th>Date</th>
+                    <th>420</th>
+                    <th>440</th>
+                    <th>450</th>
+                    <th>510</th>
+                </thead>
+                <tbody>
+                    {% for data in results_daily %}
+                        <tr>
+                            <td>{{data.fiscal_date__year_number}}</td>
+                            <td>{{data.fiscal_date__month_name}}</td>
+                            <td>{{data.fiscal_date__week_number}}</td>
+                            <td>{{data.fiscal_date__day_name}}</td>
+                            <td>{% if data.total_pieces_420 %}{{data.total_pieces_420}}{% endif%}</td>
+                            <td>{% if data.total_pieces_440 %}{{data.total_pieces_440}}{% endif%}</td>
+                            <td>{% if data.total_pieces_450 %}{{data.total_pieces_450}}{% endif%}</td>
+                            <td>{% if data.total_pieces_510 %}{{data.total_pieces_510}}{% endif%}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-responsive bg-white p-3 rounded shadow mb-3">
+            <table id="excel-table-2" class="table table-hover table-sm">
+                <thead>
+                    <th>Year</th>
+                    <th>Month</th>
+                    <th>Week</th>
+                    <th>420</th>
+                    <th>440</th>
+                    <th>450</th>
+                    <th>510</th>
+                </thead>
+                <tbody>
+                    {% for data in results_weekly %}
+                        <tr>
+                            <td>{{data.fiscal_date__year_number}}</td>
+                            <td>{{data.fiscal_date__month_name}}</td>
+                            <td>{{data.fiscal_date__week_number}}</td>
+                            <td>{% if data.total_pieces_420 %}{{data.total_pieces_420}}{% endif%}</td>
+                            <td>{% if data.total_pieces_440 %}{{data.total_pieces_440}}{% endif%}</td>
+                            <td>{% if data.total_pieces_450 %}{{data.total_pieces_450}}{% endif%}</td>
+                            <td>{% if data.total_pieces_510 %}{{data.total_pieces_510}}{% endif%}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-responsive bg-white p-3 rounded shadow mb-3">
+            <table id="excel-table-3" class="table table-hover table-sm">
+                <thead>
+                    <th>Year</th>
+                    <th>Month</th>
+                    <th>420</th>
+                    <th>440</th>
+                    <th>450</th>
+                    <th>510</th>
+                </thead>
+                <tbody>
+                    {% for data in results_montly %}
+                        <tr>
+                            <td>{{data.fiscal_date__year_number}}</td>
+                            <td>{{data.fiscal_date__month_name}}</td>
+                            <td>{% if data.total_pieces_420 %}{{data.total_pieces_420}}{% endif%}</td>
+                            <td>{% if data.total_pieces_440 %}{{data.total_pieces_440}}{% endif%}</td>
+                            <td>{% if data.total_pieces_450 %}{{data.total_pieces_450}}{% endif%}</td>
+                            <td>{% if data.total_pieces_510 %}{{data.total_pieces_510}}{% endif%}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block container %}
+    <h1 class=col-12>WorkCenters</h1>
+    <input type="text" id="filter" class="form-control col-4 mb-2" placeholder="Search">
+    <table id="table_id" class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <th>Line</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Total Pieces</th>
+            <th>Options</th>
+        </thead>
+        <tbody>
+            {% for workcenter in workcenters %}
+                <tr>
+                    <td>{{ workcenter.line}}</td>
+                    <td>{{ workcenter.name }}</td>
+                    <td>{{ workcenter.status }}</td>
+                    <td>{{ workcenter.mo__order_qty__sum}}</td>
+                    <td>
+                        <a href="", class="btn btn-primary"><span class="fas fa-edit"></span> Edit</a>
+                        <a href="", class="btn btn-danger"><span class="fas fa-trash-alt"></span> Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

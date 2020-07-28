@@ -1,0 +1,66 @@
+
+#excel-table tfoot th input{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: small;
+}
+
+
+#excel-table-2 tfoot th input{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: small;
+}
+
+
+#excel-table-3 tfoot th input{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: small;
+}
+
+#excel-table tbody td{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: small;
+    white-space: nowrap;
+    padding:2px;
+    text-align: center;
+}
+
+#excel-table-2 tbody td{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: small;
+    white-space: nowrap;
+    padding:2px;
+    text-align: center;
+}
+
+#excel-table-3 tbody td{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: small;
+    white-space: nowrap;
+    padding:2px;
+    text-align: center;
+}
+
+div.dataTables_wrapper {
+    margin: 0 auto;
+}
+
+.search-small{
+    font-size: small;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.card-sah-results{
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    margin:5px;
+    width: 15rem;
+    background-color: #e84118;
+    color: white;
+    text-align: right;
+    border-radius: 2%;
+}
+
+.warehouse-name{
+    font-size: xx-large;
+}

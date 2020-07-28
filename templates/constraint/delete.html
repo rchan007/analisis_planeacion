@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block container %}
+<form action="" method="POST">
+    {% csrf_token %}
+    <h3>¿Desea eliminar el registro?</h3>
+    <button type="Submit" class="btn btn-danger">Delete</button>
+    <a href="{% url 'constraint_list' %}" class="btn btn-primary">Cancel</a>
+</form>
+{% endblock %}

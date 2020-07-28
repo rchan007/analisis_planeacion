@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block container %}
+<form action="" method="POST">
+    {% csrf_token %}
+    <h1>¿Esta seguro que quiere eliminar el registro?</h1>
+    <a href="{% url 'fabric_shortage_list' %}" class="btn btn-primary">Cancel</a>
+    <button method="POST", class="btn btn-danger">Delete</button>
+</form>
+{% endblock %}

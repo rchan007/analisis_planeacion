@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block container %}  
+  <form method="POST" enctype="multipart/form-data">  
+    {% csrf_token %}
+    <div class="custom-file">
+      <input type="file" name="csvfile" class="custom-file-input">
+      <label class="custom-file-label" for="customFile">Choose file</label>
+    </div> 
+    <button type="submit" class="btn btn-primary mt-2">Upload</button> 
+  </form>  
+{% endblock %}
+{% block scripts%}
+  <script>
+    $(document).ready(function(){
+      
+      $(".custom-file-input").on("change", function() {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+      });
+
+    });
+  </script>
+{% endblock %}

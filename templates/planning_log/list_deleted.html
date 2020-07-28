@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block container %}
+    <div class="table-responsive bg-white p-3 rounded shadow">
+        <table id="excel-table" class="table table-hover table-sm">
+            <thead class="text-center">
+                <tr>
+                    <th>Schedule</th>
+                    <th>Work Center</th>
+                    <th>Pieces</th>
+                    <th>Project</th>
+                    <th>Comments</th>
+                    <th>Options</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                {% for mo in mos %}
+                    <tr>
+                        <td>{{mo.schedule_id__number}}</td>
+                        <td>{{mo.workcenter_id__name}}</td>
+                        <td>{{mo.order_qty__sum}}</td>
+                        <td>{{mo.project}}</td>
+                            {% if mo.schedule_id__comments == None %}<td></td>{% else %}<td>{{mo.schedule_id__comments}}</td>{% endif %}
+                        <td>
+                            <form action="" method="POST">
+                                <a type="submit" href="{% url 'return_schedule_deleted' mo.schedule_id %}" class="btn btn-sm btn-danger"><span class="far fa-trash-alt"></span></a>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+{% block scripts %}
+{% endblock %}

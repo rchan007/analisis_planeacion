@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block container %}
+
+    {% for total_sah in totals_sah_warehouse %}
+    <div class="card-sah-results">
+        <div class="warehouse-name">
+            {{total_sah.workcenter_id__warehouse_id__name}}
+            <span class="fas fa-tshirt"></span>
+        </div>
+        <div class="warehouse-sah">
+            {{total_sah.total_sah|floatformat:-2}} Sah
+        </div>
+    </div>
+    {% endfor %}
+
+    <div class="dropdown mb-2">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Select Constraint
+        </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                {% for c_name in constraint_names %}
+                    <a class="dropdown-item" href="{% url 'constraint_list_filtered' c_name.period %}">{{ c_name.period }}</a>
+                {% endfor %}
+            </div>
+    </div>
+    <div class="table-responsive  bg-white p-3 rounded shadow">
+    <table id="excel-table" class="table table-sm table-hover">
+        <thead>
+            <tr class="text-center">
+                <th>Warehouse</th>
+                <th> Work Center</th>
+                <th>Period</th>
+                <th>Constraint</th>
+                <th>Sah avg</th>
+                <th>Sah goal</th>
+                <th>Pieces goal</th>
+                <th> Comments </th>
+                <th> Options </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in constraint %}
+                <tr class="text-center">
+                    <td> {{ i.workcenter_id.warehouse_id }} </td>
+                    <td> {{ i.workcenter_id }}</td>
+                    <td>{{ i.period }}</td>
+                    <td>{{ i.status }}</td>
+                    <td>{{ i.sah_avg }}</td>
+                    <td>{{ i.sah_goal }}</td>
+                    <td>{{ i.pieces_goal }}</td>
+                    <td>{{ i.comments }}</td>
+                    <td> 
+                        <a href="{% url 'constraint_edit' i.id %}", class="btn btn-primary btn-sm"><span class="fas fa-edit"></span></a>
+                        <a href="{% url 'constraint_delete' i.id %}", class="btn btn-danger btn-sm"><span class="fas fa-trash-alt"></span></a>
+                    </td>
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+{% endblock %}

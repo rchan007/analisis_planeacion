@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block container %}
+    <h3 class="mb-3 col-12 aling-left">Planning Analysis</h3>
+    <form class="form rounded border bg-light p-2 col-12 mb-2" action="" method="POST">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="constraint">Constraint</label>
+                    <select class="form-control selcls" name="constraint" id="constraint" placeholder="Constraint">
+                        {% for constraint in constraints %}
+                            <option value="{{ constraint.period }}">{{ constraint.period }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="proposal">Proposal</label>
+                    <select class="form-control selcls" name="proposal" id="proposal" placeholder="Proposal">
+                        {% for proposal in proposals %}
+                            <option value="{{ proposal.name }}">{{ proposal.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="form-group">
+                    <label for="">.</label>
+                    <button class="btn btn-primary form-control" type="submit">Confirm</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="calc_days">Calc days WIP</label>
+            <div class="input-group">
+                <input id="calc_days" type="number" class="form-control col-2" placeholder="Days to analysi" value="15">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" id='calculate_wip' type="button">Calculate</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    
+    <div class="table-responsive">
+        <table id="analisis_planeacion" class="table table-striped table-bordered nowrap compact">
+            <thead class="text-center thead-dark">
+                <tr>
+                    <th>Proposal</th>
+                    <th>Line</th>
+                    <th>Work Center</th>
+                    <th>Constraint</th>
+                    <th>Pieces Goal Weekly</th>
+                    <th>Pieces sts 20</th>
+                    <th>Pieces sts 60</th>
+                    <th>Pieces Proposal</th>
+                    <th>Days Work</th>
+                    <th>Missig Days</th>
+                    <th>Missing Pcs</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                {% for workcenter in workcenters %}
+                    <tr>
+                        <td>{{ workcenter.proposal__planner }}</td>
+                        <td>{{ workcenter.line}}</td>
+                        <td>{{ workcenter.name }}</td>
+                        <td>{{ workcenter.constraint__status }}</td>
+                        <td>{{ workcenter.pieces_goal|floatformat:0 }}</td>
+                        <td>{{ workcenter.constraint__pieces_sts_20 }}</td> 
+                        <td>{{ workcenter.constraint__pieces_sts_60 }}</td>
+                        <td>{{ workcenter.proposal__grand_total__sum }}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Proposal</th>
+                    <th>Line</th>
+                    <th>Work Center</th>
+                    <th>Constraint</th>
+                    <th>Pieces Goal Weekly</th>
+                    <th>Pieces sts 20</th>
+                    <th>Pieces sts 60</th>
+                    <th>Pieces Proposal</th>
+                    <th>Days Work</th>
+                    <th>Missig Days</th>
+                    <th>Missing Pcs</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>  
+{% endblock %}

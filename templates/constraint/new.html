@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block container %}
+    <form action="" method="POST" oninput="resultado.value=parseInt(sah_goal.value/sah_avg.value)">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit", class="btn btn-primary">Guardar</button>
+    </form>
+{% endblock %}
