@@ -227,19 +227,14 @@ def constraintList(request):
     last_constraint = Constraint.objects.order_by('-id')[0]
     if request.method == 'GET':
         constraint_names = Constraint.objects.values('period').\
-                                                order_by('-create_att__month', 
-                                                        '-create_att__day').\
-                                                distinct()
+                                            order_by('-create_att__month','-create_att__day').\
+                                            distinct()
+       
         constraint  = Constraint.objects.all().filter(period=last_constraint.period)
         
-        totals_sah_warehouse = Constraint.objects.values('workcenter_id__warehouse_id__name').\
-                                                    annotate(total_sah=Sum('sah_goal')).\
-                                                    filter(period=last_constraint.period)
         return render(request, 'constraint/list.html', {
-            'last_constraint': last_constraint,
             'constraint': constraint,
             'constraint_names': constraint_names,
-            'totals_sah_warehouse':totals_sah_warehouse,
         })
 
 def constraintListFiltered(request, constraint_period):
@@ -249,14 +244,11 @@ def constraintListFiltered(request, constraint_period):
                                                             '-create_att__day').\
                                                     distinct()
             constraint  = Constraint.objects.all().filter(period=constraint_period)
-            totals_sah_warehouse = Constraint.objects.values('workcenter_id__warehouse_id__name').\
-                                                        annotate(total_sah=Sum('sah_goal')).\
-                                                        filter(period=constraint_period)
+            
             return render(request, 'constraint/list_filtered.html', {
                 'constraint_period': constraint_period,
                 'constraint': constraint,
                 'constraint_names': constraint_names,
-                'totals_sah_warehouse':totals_sah_warehouse,
             })
 
 class ConstraintNew(CreateView):
