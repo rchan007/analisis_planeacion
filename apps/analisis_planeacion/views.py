@@ -17,7 +17,6 @@ from .models import Constraint, Schedule, Mo, Proposal, WorkCenter, Warehouse,Su
 def convert_date(date):
     '''Convert a date to a new date available for the database'''
     result = date.split('/')
-    print(result)
     date_stamp = datetime(int(result[2]), int(result[0]), int(result[1]))
     return date_stamp.strftime('%Y-%m-%d')
 
@@ -136,10 +135,7 @@ def importar_mmz733(request):
                 schedule = Schedule.objects.filter(number=column[6])
                 if not schedule:
                     Schedule.objects.create(number = column[6],)       
-            try:
-                fiscal_date_result = FiscalCalendar.objects.filter(date=entry_date)[0]
-            except:
-                fiscal_date_result = None
+            
             mo = Mo.objects.filter(number=column[5])
             entry_date = convert_date(column[2])
             finish_date = convert_date(column[3])
@@ -155,7 +151,7 @@ def importar_mmz733(request):
                     order_qty = column[8],
                     received_qty = column[9],
                     project = column[10],
-                    fiscal_date = fiscal_date_result,
+                    fiscal_date = FiscalCalendar.objects.get(date=entry_date),
                 )
             else:
                 Mo.objects.filter(number=column[5]).update(status=column[7])
@@ -163,7 +159,7 @@ def importar_mmz733(request):
                 Mo.objects.filter(number=column[5]).update(received_qty=column[9])
                 Mo.objects.filter(number=column[5]).update(entry_date=entry_date)
                 Mo.objects.filter(number=column[5]).update(finish_date=finish_date)
-                Mo.objects.filter(number=column[5]).update(fiscal_date=fiscal_date_result)
+                Mo.objects.filter(number=column[5]).update(fiscal_date=FiscalCalendar.objects.get(date=entry_date))
                 Mo.objects.filter(number=column[5]).update(project=column[10])
     return render(request, 'export/import.html')
 
@@ -373,9 +369,9 @@ def planning_log_resume(request):
                                                     'fiscal_date__week_number', 
                                                     'fiscal_date__day_name', 
                                                     'workcenter_id__warehouse_id__name').\
-                                exclude(fiscal_date__year_number__isnull=True).\
-                                annotate(total_pieces=Sum('order_qty')).\
-                                order_by('fiscal_date__date')
+                                            exclude(fiscal_date__year_number__isnull=True).\
+                                            annotate(total_pieces=Sum('order_qty')).\
+                                            order_by('fiscal_date__date')
     results_daily = []
     for item in daily_resume_without_warehouse:
         for item2 in daily_resume_with_warehouse:
