@@ -81,62 +81,7 @@
     </div>
 </body>
 <script src="https://kit.fontawesome.com/3a008cc3c3.js" crossorigin="anonymous"></script>
-<script>
-    $(document).ready(function(){
-
-        $('#excel-table, #excel-table-2, #excel-table-3, #analisis_planeacion').each(function(){
-            $(this).DataTable({
-                'stateSave': true,
-                "scrollX": true,
-                columnDefs: [
-                { width: '20%', targets: 0 }
-                ],
-                fixedColumns: true,
-                "language": {
-                    "decimal": ".",
-                    "thousands": ","
-                },
-                initComplete: function () {
-                    // Apply the search
-                    this.api().columns().every( function () {
-                        var that = this;
-                        
-                        $( 'input', this.footer() ).on( 'keyup change clear', function () {
-                            if ( that.search() !== this.value ) {
-                                that
-                                    .search( this.value )
-                                    .draw();
-                            }
-                        } );
-                    } );
-                }
-            });
-        });
-
-        $('#excel-table tfoot th').each( function () {
-            var title = $(this).text();
-            $(this).html( '<input class="form-control form-control-sm" type="text" placeholder="Search '+title+'" />' );
-        } );
-        
-
-        $('#analisis_planeacion tfoot th').each( function () {
-            var title = $(this).text();
-            $(this).html( '<input class="search-small" type="text" placeholder="Search '+title+'" />' );
-        } );
-            
-        $('#datepicker').datepicker({
-            uiLibrary: 'bootstrap4',
-            format:'yyyy-mm-dd'
-        });
-        
-        $('#datepicker2').datepicker({
-            uiLibrary: 'bootstrap4',
-            format:'yyyy-mm-dd'
-        });
-
-    });
-</script>
     {% block scripts %}
-    <script src="{% static 'js/script.js' %}"></script>
+        <script src="{% static 'js/script.js' %}"></script>
     {% endblock %}
 </html>

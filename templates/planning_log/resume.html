@@ -3,7 +3,7 @@
 {% block container %}
     <div class="d-flex flex-column mx-auto">
         <div class="table-responsive bg-white p-3 rounded shadow mb-3">
-            <table id="excel-table" class="table table-hover table-sm">
+            <table id="log_table_daily" class="table table-hover table-sm compact">
                 <thead>
                     <th>Year</th>
                     <th>Month</th>
@@ -32,7 +32,7 @@
         </div>
 
         <div class="table-responsive bg-white p-3 rounded shadow mb-3">
-            <table id="excel-table-2" class="table table-hover table-sm">
+            <table id="log_table_weekly" class="table table-hover table-sm">
                 <thead>
                     <th>Year</th>
                     <th>Month</th>
@@ -59,7 +59,7 @@
         </div>
 
         <div class="table-responsive bg-white p-3 rounded shadow mb-3">
-            <table id="excel-table-3" class="table table-hover table-sm">
+            <table id="log_table_montly" class="table table-hover table-sm">
                 <thead>
                     <th>Year</th>
                     <th>Month</th>
@@ -83,5 +83,99 @@
             </table>
         </div>
     </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        $(document).ready(function(){
 
+        $('#log_table_daily thead tr').clone(true).appendTo( '#log_table_daily thead' );
+        $('#log_table_daily thead tr:eq(1) th').each( function(i) {
+            var title = $(this).text();
+            $(this).html( '<input class="form-control form-control-sm" type="text" placeholder="Search '+title+'" />' );
+            var that = this;
+            $('input', this).on('keyup change', function(){
+                if ( table_daily.column(i).search() !== this.value ) {
+                    table_daily
+                        .column(i)
+                        .search( this.value )
+                        .draw();
+            }
+            })
+        })
+
+        var table_daily = $('#log_table_daily').DataTable({
+                orderCellsTop: true,
+                fixedHeader: true,
+                scrollX: true,
+                select: true,
+                columnDefs: [{ width: '20%', targets: 0 }],
+                fixedColumns: true,
+            });
+
+
+        $('#log_table_weekly thead tr').clone(true).appendTo( '#log_table_weekly thead' );
+        $('#log_table_weekly thead tr:eq(1) th').each( function(i) {
+            var title = $(this).text();
+            $(this).html( '<input class="form-control form-control-sm" type="text" placeholder="Search '+title+'" />' );
+            var that = this;
+            $('input', this).on('keyup change', function(){
+                if ( table_weekly.column(i).search() !== this.value ) {
+                    table_weekly
+                        .column(i)
+                        .search( this.value )
+                        .draw();
+            }
+            })
+        })
+
+        var table_weekly = $('#log_table_weekly').DataTable({
+                orderCellsTop: true,
+                fixedHeader: true,
+                scrollX: true,
+                select: true,
+                columnDefs: [{ width: '20%', targets: 0 }],
+                fixedColumns: true,
+            });
+
+        
+        $('#log_table_montly thead tr').clone(true).appendTo( '#log_table_montly thead' );
+        $('#log_table_montly thead tr:eq(1) th').each( function(i) {
+            var title = $(this).text();
+            $(this).html( '<input class="form-control form-control-sm" type="text" placeholder="Search '+title+'" />' );
+            var that = this;
+            $('input', this).on('keyup change', function(){
+                if ( table_montly.column(i).search() !== this.value ) {
+                    table_montly
+                        .column(i)
+                        .search( this.value )
+                        .draw();
+            }
+            })
+        })
+
+        var table_montly = $('#log_table_montly').DataTable({
+                orderCellsTop: true,
+                fixedHeader: true,
+                scrollX: true,
+                select: true,
+                columnDefs: [{ width: '20%', targets: 0 }],
+                fixedColumns: true,
+            });
+
+        
+
+
+            
+        $('#datepicker').datepicker({
+            uiLibrary: 'bootstrap4',
+            format:'yyyy-mm-dd'
+        });
+
+        $('#datepicker2').datepicker({
+            uiLibrary: 'bootstrap4',
+            format:'yyyy-mm-dd'
+        });
+
+        });
+    </script>
 {% endblock %}

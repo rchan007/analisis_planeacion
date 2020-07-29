@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block container %}
-    <h3 class="mb-3 col-12 aling-left">Planning Analysis</h3>
     <form class="form rounded border bg-light p-2 col-12 mb-2" action="" method="POST">
         {% csrf_token %}
         <div class="row">
@@ -31,9 +30,7 @@
                     <button class="btn btn-primary form-control" type="submit">Confirm</button>
                 </div>
             </div>
-        </div>
-
-        <div class="form-group">
+            <div class="form-group">
             <label for="calc_days">Calc days WIP</label>
             <div class="input-group">
                 <input id="calc_days" type="number" class="form-control col-2" placeholder="Days to analysi" value="15">
@@ -42,13 +39,16 @@
                 </div>
             </div>
         </div>
+        </div>
+
+        
     </form>
     
-    <div class="table-responsive">
-        <table id="analisis_planeacion" class="table table-striped table-bordered nowrap compact">
-            <thead class="text-center thead-dark">
+    <div class="table-responsive bg-white p-2 rounded shadow">
+        <table id="analisis_planeacion" class="table table-sm nowrap compact">
+            <thead class="text-center">
                 <tr>
-                    <th>Proposal</th>
+                    <th>Planner</th>
                     <th>Line</th>
                     <th>Work Center</th>
                     <th>Constraint</th>
@@ -78,21 +78,6 @@
                     </tr>
                 {% endfor %}
             </tbody>
-            <tfoot>
-                <tr>
-                    <th>Proposal</th>
-                    <th>Line</th>
-                    <th>Work Center</th>
-                    <th>Constraint</th>
-                    <th>Pieces Goal Weekly</th>
-                    <th>Pieces sts 20</th>
-                    <th>Pieces sts 60</th>
-                    <th>Pieces Proposal</th>
-                    <th>Days Work</th>
-                    <th>Missig Days</th>
-                    <th>Missing Pcs</th>
-                </tr>
-            </tfoot>
         </table>
     </div>  
 {% endblock %}

@@ -463,11 +463,9 @@ def AnalisisPlaneacionList(request):
     proposals = None
     if request.method == 'POST':
         constraint_value = request.POST.get('constraint')
-        proposal_value = request.POST.get('proposal')
         workcenters = WorkCenter.objects.filter(constraint__period=constraint_value)
         workcenters = workcenters.values('name', 'line' , 'proposal__planner', 'constraint__status')
-        workcenters = workcenters.annotate(Sum('proposal__grand_total')).\
-                                annotate(pieces_goal= F('constraint__sah_goal') / F('constraint__sah_avg'))
+        workcenters = workcenters.annotate(Sum('proposal__grand_total'), pieces_goal=F('constraint__sah_goal') / F('constraint__sah_avg'))
         
         status_20 = Mo.objects.values('workcenter_id__name').\
                                 filter(status='20').\
