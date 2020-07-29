@@ -3,7 +3,7 @@
 {% block container %}
     <h1 class="col-12">Fabric Shortage</h1>
     <a href="{% url 'fabric_shortage_new' %}" class="btn btn-primary">New</a>
-    <table class="table table-bordered table-striped">
+    <table id="excel_table" class="table table-sm table-hover">
         <thead class="thead-dark">
             <th>Workcenter</th>
             <th>Sku</th>
@@ -30,4 +30,35 @@
             {%endfor%}
         </tbody>
     </table>
+{% endblock %}
+{%block scripts%}
+    <script>
+        $(document).ready(function(){
+        
+            $('#excel_table thead tr').clone(true).appendTo( '#excel_table thead' );
+            $('#excel_table thead tr:eq(1) th').each( function(i) {
+                var title = $(this).text();
+                $(this).html( '<input class="form-control form-control-sm" type="text" placeholder="Search '+title+'" />' );
+                var that = this;
+                $('input', this).on('keyup change', function(){
+                    if ( table.column(i).search() !== this.value ) {
+                        table
+                            .column(i)
+                            .search( this.value )
+                            .draw();
+                }
+                });
+            });
+        
+            var table = $('#excel_table').DataTable({
+                    orderCellsTop: true,
+                    fixedHeader: true,
+                    scrollX: true,
+                    select: true,
+                    columnDefs: [{ width: '20%', targets: 0 }],
+                    fixedColumns: true,
+                });
+        });
+        
+    </script>
 {% endblock %}

@@ -45,7 +45,7 @@
     </form>
     
     <div class="table-responsive bg-white p-2 rounded shadow">
-        <table id="analisis_planeacion" class="table table-sm nowrap compact">
+        <table id="excel_table" class="table table-sm nowrap compact">
             <thead class="text-center">
                 <tr>
                     <th>Planner</th>
@@ -80,4 +80,35 @@
             </tbody>
         </table>
     </div>  
+{% endblock %}
+{%block scripts%}
+    <script>
+        $(document).ready(function(){
+        
+            $('#excel_table thead tr').clone(true).appendTo( '#excel_table thead' );
+            $('#excel_table thead tr:eq(1) th').each( function(i) {
+                var title = $(this).text();
+                $(this).html( '<input class="form-control form-control-sm" type="text" placeholder="Search '+title+'" />' );
+                var that = this;
+                $('input', this).on('keyup change', function(){
+                    if ( table.column(i).search() !== this.value ) {
+                        table
+                            .column(i)
+                            .search( this.value )
+                            .draw();
+                }
+                });
+            });
+        
+            var table = $('#excel_table').DataTable({
+                    orderCellsTop: true,
+                    fixedHeader: true,
+                    scrollX: true,
+                    select: true,
+                    columnDefs: [{ width: '20%', targets: 0 }],
+                    fixedColumns: true,
+                });
+        });
+        
+    </script>
 {% endblock %}

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block container %}
     <div class="table-responsive bg-white p-3 rounded shadow">
-        <table id="excel-table" class="table table-hover table-sm">
+        <table id="excel_table" class="table table-hover table-sm">
             <thead class="text-center">
                 <tr>
                     <th>Schedule</th>
@@ -32,4 +32,33 @@
     </div>
 {% endblock %}
 {% block scripts %}
+<script>
+$(document).ready(function(){
+
+    $('#excel_table thead tr').clone(true).appendTo( '#excel_table thead' );
+    $('#excel_table thead tr:eq(1) th').each( function(i) {
+        var title = $(this).text();
+        $(this).html( '<input class="form-control form-control-sm" type="text" placeholder="Search '+title+'" />' );
+        var that = this;
+        $('input', this).on('keyup change', function(){
+            if ( table.column(i).search() !== this.value ) {
+                table
+                    .column(i)
+                    .search( this.value )
+                    .draw();
+        }
+        });
+    });
+
+    var table = $('#excel_table').DataTable({
+            orderCellsTop: true,
+            fixedHeader: true,
+            scrollX: true,
+            select: true,
+            columnDefs: [{ width: '20%', targets: 0 }],
+            fixedColumns: true,
+        });
+});
+
+</script>
 {% endblock %}
